@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Block Expressions</title>
+    <style>
+        .mybold{font-weight: bold;}
+    </style>
+    <script src="lib/handlebars.min.js"></script>
+</head>
+<body>
+    <script id="entry-template" type="text/x-handlebars-template">
+        <div class="entry">
+            <h1>{{title}}</h1>
+            <div class="body">
+                <!--{{#noop}}{{body}}{{/noop}}-->
+                {{./noop}}{{body}}
+
+            </div>
+            <div class="body">
+                {{#bold}}{{body}}{{/bold}}
+            </div>
+            <div class="body">
+                {{#with story}}
+                    <div class="intro">{{intro}}</div>
+                    <div class="body">{{body}}</div>
+                {{/with}}
+            </div>
+        </div>
+    </script>
+    <script>
+        Handlebars.registerHelper('noop',function(options){
+            return options.fn(this);//this指代当前上下文
+            //options.fn将当前上下文中的数据进行编译，并且返回结果
+        });
+        Handlebars.registerHelper('bold',function(options){
+            return new Handlebars.SafeString(
+                    ' <div class="mybold"> '
+                    + options.fn(this)
+                    + '</div>');
+        });
+        Handlebars.registerHelper('with',function(context,options){
+            return options.fn(context);
+        });
+
+        var content = {
+            title: "My New Post",
+            body: "This is my first post!",
+            story:{
+                intro:'Before the jump',
+                body:'After the jump'
+            }
+        };
+        var source = document.getElementById('entry-template').innerHTML;//获取模板的内容
+        var template = Handlebars.compile(source);//编译模板
+        var html = template(content);//生成相应的html
+        document.body.innerHTML = html;
+    </script>
+</body>
+</html>
