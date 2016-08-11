@@ -38,18 +38,28 @@
             </div>
             {{/array}}
         </div>
+        <div class="comments">
+            {{#each comments as |value key|}}
+            <h2>key:{{key}},value:{{value.body}}</h2>
+            {{/each}}
+        </div>
+        <div class="comments">
+            {{#block-params 1 2 3 as |foo bar baz|}}
+            <h2>{{foo}} {{bar}} {{baz}}</h2>
+            {{/block-params}}
+        </div>
     </script>
     <script>
-        Handlebars.registerHelper('each',function(context,options){
-            var ret = '';
-//            for(var i = 0,j = context.length;i < j;i++){
-//                ret = ret + options.fn(context[i]);
-//            }
-//            return ret;
-            return "<ul>" + context.map(function(item){
-                        return "<li>" + options.fn(item) + "</li>";
-                    }).join('\n') + "</ul>";
-        });
+//        Handlebars.registerHelper('each',function(context,options){
+//            var ret = '';
+////            for(var i = 0,j = context.length;i < j;i++){
+////                ret = ret + options.fn(context[i]);
+////            }
+////            return ret;
+//            return "<ul>" + context.map(function(item){
+//                        return "<li>" + options.fn(item) + "</li>";
+//                    }).join('\n') + "</ul>";
+//        });
 //        Handlebars.registerHelper('with',function(context,options){
 //            return options.fn(context);
 //        });
@@ -65,11 +75,9 @@
         });
         Handlebars.registerHelper('array',function(context,options){
             var out = "<ul>",data;
-//            console.log(options.data)
             if(options.data){
                 data = Handlebars.createFrame(options.data);//创建一个新的对象，避免将原有的对象属性感染
             }
-//            console.log(data)
             for(var i = 0;i < context.length;i++){
                 if(data){
                     data.index = i+1;
@@ -80,6 +88,16 @@
 
             return out;
         });
+
+        Handlebars.registerHelper('block-params',function(){
+            var args = new Array,options = arguments[arguments.length-1];
+            for(var i = 0;i < arguments.length-1;i++){
+                args.push(arguments[i]);
+            }
+
+            return options.fn(this,{data:options.data,blockParams:args});
+        });
+
         var content = {
             title: "My New Post",
             body: "This is my first post!",
