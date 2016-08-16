@@ -18,21 +18,53 @@
         {{#> userMessage1 tagName="h1"}}
             Failover content
         {{/userMessage1}}
+
+        {{> (partial)}}
+
+        {{> (lookup . 'partial')}}
+
+        {{#each comments}}
+        {{> contexts parameter=../body}}
+        {{/each}}
+        <br>
+        <h1>inline</h1>
+        {{#> layout}}
+        {{#*inline userMessage}}
+            My Nav
+        {{/inline}}
+        {{/layout}}
+
+
+    </div>
+</script>
+<script type="text/x-handlebars-template" id="partial-template">
+    <div class="nav">
+        {{> userMessage}}
     </div>
 </script>
 <script>
+    Handlebars.registerHelper('partial',function(){//返回一个partial的名字
+        return 'userMessage';
+    });
     Handlebars.registerPartial('userMessage',
         '<{{tagName}}>By {{author.firstName}} {{author.lastName}}</{{tagName}}>'
         +'<div class="body">{{body}}</div>'
     );
+
     Handlebars.registerPartial('contexts','{{parameter}}');
+    Handlebars.registerPartial('layout',document.getElementById('partial-template').innerHTML);
     var context = {
         author: {firstName: "Alan", lastName: "Johnson"},
+        partial:'userMessage',//将字段的值修改成partial的名字，用lookup来协助使用
         body: "I Love Handlebars",
         comments: [{
             author: {firstName: "Yehuda", lastName: "Katz"},
             body: "Me too!"
-        }]
+        }, {
+            author: {firstName: "xiaohong", lastName: "John"},
+            body: "Me too 2!"
+        }
+        ]
     };
     var source = document.getElementById('entry-template').innerHTML;
     var template = Handlebars.compile(source);

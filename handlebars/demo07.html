@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inline Partials</title>
+    <script src="lib/handlebars.min.js"></script>
+</head>
+<body>
+<script type="text/x-handlebars-template" id="entry-template">
+    <div class="comments">
+
+
+    </div>
+</script>
+<script>
+    Handlebars.registerHelper('partial',function(){//返回一个partial的名字
+        return 'userMessage';
+    });
+    Handlebars.registerPartial('userMessage',
+            '<{{tagName}}>By {{author.firstName}} {{author.lastName}}</{{tagName}}>'
+            +'<div class="body">{{body}}</div>'
+    );
+    Handlebars.registerPartial('contexts','{{parameter}}');
+    var context = {
+        author: {firstName: "Alan", lastName: "Johnson"},
+        partial:'userMessage',//将字段的值修改成partial的名字，用lookup来协助使用
+        body: "I Love Handlebars",
+        comments: [{
+            author: {firstName: "Yehuda", lastName: "Katz"},
+            body: "Me too!"
+        }]
+    };
+    var source = document.getElementById('entry-template').innerHTML;
+    var template = Handlebars.compile(source);
+    var html = template(context);
+    document.body.innerHTML = html;
+</script>
+</body>
+</html>
