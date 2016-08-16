@@ -13,6 +13,11 @@
         {{#each comments}}
         {{> userMessage tagName="h2"}}
         {{/each}}
+        {{> contexts parameter='value'}}
+        <br>
+        {{#> userMessage1 tagName="h1"}}
+            Failover content
+        {{/userMessage1}}
     </div>
 </script>
 <script>
@@ -20,6 +25,7 @@
         '<{{tagName}}>By {{author.firstName}} {{author.lastName}}</{{tagName}}>'
         +'<div class="body">{{body}}</div>'
     );
+    Handlebars.registerPartial('contexts','{{parameter}}');
     var context = {
         author: {firstName: "Alan", lastName: "Johnson"},
         body: "I Love Handlebars",
