@@ -9,13 +9,13 @@
 <script id="entry-template" type="text/x-handlebars-template">
     <div class="comments">
         {{#each nav~}}
-            <a href="{{url}}">
+        <a href="{{url}}">
             {{~#if test}}
             {{~title}}
             {{~else~}}
             Empty
             {{~/if~}}
-            </a>
+        </a>
         {{~/each}}
     </div>
     <div class="comments">
