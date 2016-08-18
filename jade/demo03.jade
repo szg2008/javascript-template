@@ -1,0 +1,23 @@
+doctype html
+html
+    head
+        title Code
+    body
+        - for (var x = 0; x < 10; x++)
+            li #{x+1}
+
+        - var list = ["Uno", "Dos", "Tres","Cuatro", "Cinco", "Seis"]
+          each key in list
+            li #{key}
+            li=key
+
+        p
+         = 'this code is <code>!'
+        p='this code is <code>!'
+
+        p
+            != 'this code is <code>!'
+        p!='this code is <code>!'
+
+
+
