@@ -1,0 +1,38 @@
+doctype html
+html
+    head
+        title Attributes
+    body
+        a(href="google.com") Google
+        a(class="button" href="google.com") Google
+        - var authenticated = true;
+        div(class=authenticated?'authed':'annon')
+            input(
+                type="checkbox"
+                class="git"
+                checked
+            )
+            //Boolean Attribute
+            input(type="checkbox",checked)
+            input(type="checkbox",checked=true)
+            input(type="checkbox",checked=false)
+            input(type="checkbox",checked=true.toString())
+        div(attr='<code>') escape
+        div(attr!='<code>') unescape
+        //Style Attribute
+        div(style={color:'red',fontSize:'14px'}) Style Attribute
+        //Class Attribute
+        - var classes = ['big', 'middle', 'small'];
+        div(class=classes)
+        div.bing(class=classes class='bing')
+        - var currentUrl = '/me'
+        a(class={active:currentUrl == '/'} href='/') Home
+        a(class={active:currentUrl == '/me'} href='/me') Me
+        //Class Literal  ID Literal
+        div#choose
+        .content
+        //&attribute
+        div#foo(data-bar="foo")&attributes({'data-foo': 'bar'})
+        div#bar(data-bar="foo",data-baz='baz')&attributes({'data-foo': 'bar'})
+        - var attributes = {'data-foos':'foos'}
+        div.content(data-foo='foo')&attributes(attributes)
