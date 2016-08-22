@@ -1,0 +1,22 @@
+doctype html
+html
+    head
+        title Conditions
+    body
+        - var user = {desc:'this is description'}
+        - var flag = false
+        #user
+            if user.desc
+                h2 Description
+                p.description #{user.desc}
+                p.description=user.desc
+            else if flag
+                h2 Flag
+                p.description=user.desc
+            else
+                h2 Description
+                p.description User has no description
+        #cont
+            unless flag
+                p this is content #{flag}
+
