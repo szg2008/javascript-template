@@ -1,18 +1,40 @@
+div(class="bit") this is div
+
 :markdown-it
     ### Markdown
 
     I often like including markdown documents.
     I often like including markdown documents.
 
+style
+    :css
+        h3{color:red}
+        p{color:blue}
+    :less
+        body{
+            @link-color:#f00;
+            background: #efefef;
+            div{
+                color:@link-color;
+            }
+        }
+style.
+    body{
+        background-color: #cc76ff;
+    }
+
+
+
 script
+    :js
+        console.log('clicked');
+        document.write('this is js output\n');
+    :coffeescript
+        document.write 'this is output'
+        console.log 'This is coffeescript'
     :coffee-script
-        console.log 'This is coffee script'
-
-
-
-
-
-
-
-
-
+        document.write 'this is output'
+        console.log 'This is coffee-script'
+    :coffee
+        console.log ":coffee"
+        a = 42;
